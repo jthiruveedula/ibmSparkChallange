@@ -1,2 +1,2 @@
-# ibmSparkChallange
-IBM Spark Challange
+# ibmSparkChallenge
+IBM Spark Challenge
