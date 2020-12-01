@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Dec 02 01:17:08 2020
+
+@author: Jagadeesh 
+"""
+
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as f
 
@@ -156,7 +163,7 @@ class ibmAssignment:
         This method would write aggregated output to COS bucket in IBM cloud
         '''
         self.maleVsFemaleSalaryGap.write \
-            .format(fileFormat) \   
+            .format(fileFormat) \
             .option("compression","snappy") \
             .mode("overwrite") \
             .save("cos://candidate-exercise.myCos/{}".format(bucketName))
