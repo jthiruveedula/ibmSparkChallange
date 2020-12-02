@@ -1,6 +1,6 @@
 # IBM-SparkAssignment
 
-1. Configuring Hadoop and Spark services in VM(I've used GCP compute Engine)
+1. Configured Hadoop and Spark services in VM(I've used GCP compute Engine)
 2. I've created envsetup.sh script that would install all dependencies and start spark services
 3. Created functSpark.py that has main class and methods for reading, writing data into COS and DB(using spark jdbc driver.) 
 4. Created main.py for instantiating spark session in standalone mode.
