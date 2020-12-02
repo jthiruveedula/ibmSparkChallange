@@ -116,31 +116,34 @@ class ibmAssignment:
         '''
         self.processedDF.registerTempTable(tempTableName)
         logging.info("Stage table has been created")
- 
-        genderRatioPerDept = self.spark.sql(""" \
-            select \
+
+        query1 = """select \
             round((sum(case when gender = 'Male' then 1 else 0 end)/count(*)) * 100,2) as male_ratio, \
             round((sum(case when gender = 'Female' then 1 else 0 end)/count(*)) * 100,2) as female_ratio, \
             department \
             from {} where department <> 'NULL' \
             group by department \
-            """).format(tempTableName)
+            """.format(tempTableName)
+ 
+        genderRatioPerDept = self.spark.sql(query1)
         
         genderRatioPerDept.show()
         logging.info("genderRatioPerDept has been calculated")
 
-        avgSalaryPerDept = self.spark.sql("""\
+        query2 = """\
             select round(avg(nvl(regexp_replace(salary,'[$,]',''),0)),2)as avgSalaryPerDept, \
             department \
             from {}
             group by department \
-            """).format(tempTableName)
+            """.format(tempTableName)
+
+        avgSalaryPerDept = self.spark.sql(query2)
 
         avgSalaryPerDept.show()
 
         logging.info("avgSalaryPerDept has been calculated")
 
-        self.maleVsFemaleSalaryGap = self.spark.sql(""" \
+        query3 = """ \
             select department,ROUND(AVG(ifnull(regexp_replace(salary,'[$,]',''),0)),0) sum_job_salary, \
             round(sum(case when gender='Male' then ifnull(regexp_replace(salary,'[$,]',''),0) end),0) sum_m_salary, \
             round(sum(case when gender='Female' then ifnull(regexp_replace(salary,'[$,]',''),0) end),0) sum_f_salary, \
@@ -148,7 +151,9 @@ class ibmAssignment:
             from {} where department <> 'NULL' \
             group by department \
             order by department \
-            """).format(tempTableName)
+            """.format(tempTableName)
+
+        self.maleVsFemaleSalaryGap = self.spark.sql(query3)
         
         maleVsFemaleSalaryGap.show()
         logging.info("maleVsFemaleSalaryGap has been calculated")
