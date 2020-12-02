@@ -7,6 +7,18 @@
 5. Implemented logging capability to write logs for each session.
 6. Implemented generic methods to read data from different file formats and DB's
 
+Note: We need to pass our IBM accessId and secretKey while configuring that would help spark to connect IBM COS.
+
+
+# Spark-Submit
+
+```
+spark-submit --jars \
+ /root/mvn/mvn/stocator/target/stocator-1.1.4-SNAPSHOT-jar-with-dependencies.jar,/root/mvn/mvn/stocator/target/mysql-connector-java-5.1.45-bin.jar \
+ --master spark://10.148.0.10:7077
+  main.py 
+```
+
 ## Sample output snips:
 
 ### Average salary/Department
