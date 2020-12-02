@@ -22,8 +22,8 @@ class ibmAssignment:
         '''
         This method would initialize/creates spark session.
         '''             
-        spark = SparkSession.builder.appName(applName).master(mastConf).getOrCreate()
-        logging.info(spark)
+        self.spark = SparkSession.builder.appName(applName).master(mastConf).getOrCreate()
+        
         logging.info("Spark Session created")
 
         """ sourceDF = spark.read \
@@ -39,7 +39,7 @@ class ibmAssignment:
         self.filetype = filetype
 
         if filetype.lower() != "jdbc":
-            self.sourceDF = spark.read \
+            self.sourceDF = self.spark.read \
                 .format(self.filetype) \
                 .option("header", "true") \
                 .option("inferSchema", "true") \
@@ -47,7 +47,7 @@ class ibmAssignment:
             logging.info("Source file has been captured!")
         else:
             #these hardcoded values could be parameterized or picked from global config files, for solving this in timely manner i've done this.
-            self.sourceDF = spark.read \
+            self.sourceDF = self.spark.read \
                 .format("jdbc") \
                 .option("url", "jdbc:mysql://localhost/sparktest") \
                 .option("driver", "com.mysql.jdbc.Driver") \
@@ -94,7 +94,7 @@ class ibmAssignment:
         '''
         this method would allow us to read data from database and display frist 20 lines
         '''
-        sourceTableDF = spark.read \
+        sourceTableDF = self.spark.read \
             .format("jdbc") \
             .option("url", "jdbc:mysql://localhost/sparktest") \
             .option("driver", "com.mysql.jdbc.Driver") \
@@ -117,7 +117,7 @@ class ibmAssignment:
         self.processedDF.registerTempTable(tempTableName)
         logging.info("Stage table has been created")
  
-        genderRatioPerDept = spark.sql(""" \
+        genderRatioPerDept = self.spark.sql(""" \
             select \
             round((sum(case when gender = 'Male' then 1 else 0 end)/count(*)) * 100,2) as male_ratio, \
             round((sum(case when gender = 'Female' then 1 else 0 end)/count(*)) * 100,2) as female_ratio, \
@@ -130,7 +130,7 @@ class ibmAssignment:
         genderRatioPerDept.show()
         logging.info("genderRatioPerDept has been calculated")
 
-        avgSalaryPerDept = spark.sql("""\
+        avgSalaryPerDept = self.spark.sql("""\
             select round(avg(nvl(regexp_replace(salary,'[$,]',''),0)),2)as avgSalaryPerDept, \
             department 
             from {}
@@ -141,7 +141,7 @@ class ibmAssignment:
 
         logging.info("avgSalaryPerDept has been calculated")
 
-        self.maleVsFemaleSalaryGap = spark.sql(""" \
+        self.maleVsFemaleSalaryGap = self.spark.sql(""" \
             select department,ROUND(AVG(ifnull(regexp_replace(salary,'[$,]',''),0)),0) sum_job_salary, \
             round(sum(case when gender='Male' then ifnull(regexp_replace(salary,'[$,]',''),0) end),0) sum_m_salary, \
             round(sum(case when gender='Female' then ifnull(regexp_replace(salary,'[$,]',''),0) end),0) sum_f_salary, \
