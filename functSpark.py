@@ -122,8 +122,7 @@ class ibmAssignment:
             round((sum(case when gender = 'Male' then 1 else 0 end)/count(*)) * 100,2) as male_ratio, \
             round((sum(case when gender = 'Female' then 1 else 0 end)/count(*)) * 100,2) as female_ratio, \
             department \
-            from {} \
-            where department <> 'NULL' \
+            from {} where department <> 'NULL' \
             group by department \
             """).format(tempTableName)
         
@@ -132,7 +131,7 @@ class ibmAssignment:
 
         avgSalaryPerDept = self.spark.sql("""\
             select round(avg(nvl(regexp_replace(salary,'[$,]',''),0)),2)as avgSalaryPerDept, \
-            department 
+            department \
             from {}
             group by department \
             """).format(tempTableName)
@@ -146,8 +145,7 @@ class ibmAssignment:
             round(sum(case when gender='Male' then ifnull(regexp_replace(salary,'[$,]',''),0) end),0) sum_m_salary, \
             round(sum(case when gender='Female' then ifnull(regexp_replace(salary,'[$,]',''),0) end),0) sum_f_salary, \
             abs(round(sum(case when gender='Female' then ifnull(regexp_replace(salary,'[$,]',''),0) end),0) - round(sum(case when gender='Male' then ifnull(regexp_replace(salary,'[$,]',''),0) end),0)) diff_in_sum \
-            from {} \
-            where department <> 'NULL' \
+            from {} where department <> 'NULL' \
             group by department \
             order by department \
             """).format(tempTableName)
