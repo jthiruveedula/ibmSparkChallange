@@ -23,8 +23,8 @@ class ibmAssignment:
         This method would initialize/creates spark session.
         '''             
         spark = SparkSession.builder.appName(applName).master(mastConf).getOrCreate()
-        logging.INFO(spark)
-        logging.INFO("Spark Session created")
+        logging.info(spark)
+        logging.info("Spark Session created")
 
         """ sourceDF = spark.read \
             .format("csv") \
@@ -36,13 +36,15 @@ class ibmAssignment:
         '''
         This method would created data frame out of source data!
         '''
+        self.filetype = filetype
+
         if lower(filetype) != "jdbc":
             self.sourceDF = spark.read \
                 .format(self.filetype) \
                 .option("header", "true") \
                 .option("inferSchema", "true") \
                 .load(location)
-            logging.INFO("Source file has been captured!")
+            logging.info("Source file has been captured!")
         else:
             #these hardcoded values could be parameterized or picked from global config files, for solving this in timely manner i've done this.
             self.sourceDF = spark.read \
@@ -54,12 +56,12 @@ class ibmAssignment:
                 .option("useSSL","false") \
                 .option("password", "redhat@123") \
                 .load()
-            logging.INFO("Source Data has been captured from Database")
+            logging.info("Source Data has been captured from Database")
         return self.sourceDF
 
-    def dataPreprocessing(self,tableName):
+    def dataPreprocessing(self):
         self.processedDF = self.sourceDF.select("Name","Gender","Department",f.regexp_replace("salary",'[$,]','').alias("Salary"),"Loc","Rating")
-        logging.INFO("Data preprocessing stage completed")
+        logging.info("Data preprocessing stage completed")
         return self.processedDF
 
 #4.	Develop Scala code to:
@@ -80,7 +82,7 @@ class ibmAssignment:
             .option("useSSL","false") \
             .option("password", "redhat@123") \
             .save()
-        logging.INFO("Table has been loaded with clean data")
+        logging.info("Table has been loaded with clean data")
 
         print("Data has been dumped into table {} successfully".format(tableName))
 
@@ -101,7 +103,7 @@ class ibmAssignment:
             .option("useSSL","false") \
             .option("password", "redhat@123") \
             .load()
-        logging.INFO("Fetching data from DataBase and showing 20 sample records")
+        logging.info("Fetching data from DataBase and showing 20 sample records")
         return sourceTableDF.show(20)
 
 #a.	Gender ratio in each department
@@ -167,4 +169,3 @@ class ibmAssignment:
             .option("compression","snappy") \
             .mode("overwrite") \
             .save("cos://candidate-exercise.myCos/{}".format(bucketName))
-
