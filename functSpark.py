@@ -80,11 +80,8 @@ class ibmAssignment:
         logging.info("Table has been loaded with clean data")
 
         print("Data has been dumped into table {} successfully".format(tableName))
-
-
-#5.	Develop Scala code to read the same data from the database and display frist 20 lines.  Also develop code to calculate and display the following:
-
-    
+        
+#5.	Develop Scala code to read the same data from the database and display frist 20 lines.  Also develop code to calculate and display the following:    
     def tableDataViewer(self,tableName):
         '''
         this method would allow us to read data from database and display frist 20 lines
@@ -169,9 +166,7 @@ class ibmAssignment:
 
         logging.info("maleVsFemaleSalaryGap has been calculated")
 
-        return self.maleVsFemaleSalaryGap
-    
-    
+        return self.maleVsFemaleSalaryGap  
 #Develop Scala code to write at least one of the data calculated in step 5 as multi part Parquet files as COS object in the bucket information provided in Step 1
 #cos://candidate-exercise.myCos/candidate-exercise
     def cosBucketWriter(self,bucketName,fileFormat):
