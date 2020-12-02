@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Dec 02 01:17:08 2020
+Created on Thu Dec 03 01:17:08 2020
 
 @author: Jagadeesh 
 """
@@ -204,4 +204,3 @@ class ibmAssignment:
         logging.info(bucketOut)
 
         logging.info("Data retrived from Bucket {}".format(bucketName))
-        
