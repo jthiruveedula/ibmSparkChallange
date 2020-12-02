@@ -1,7 +1,8 @@
 import logging
 from  pyspark import *
+from datetime import datetime
 
-logging.basicConfig(filename='pyspark.log',level=logging.INFO,format='%(asctime)s:%(levelname)s:%(message)s')
+logging.basicConfig(filename=datetime.now().strftime('/sparklogs/spark_%H:%M_%Y_%m_%d.log'),level=logging.INFO,format='%(asctime)s:%(levelname)s:%(message)s')
 
 
 applName = "IBM Assignment"

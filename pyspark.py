@@ -7,10 +7,10 @@ Created on Wed Dec 02 01:17:08 2020
 
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as f
-
+from datetime import datetime
 import logging
 
-logging.basicConfig(filename='pyspark.log',level=logging.INFO,format='%(asctime)s:%(levelname)s:%(message)s')
+logging.basicConfig(filename=datetime.now().strftime('/sparklogs/spark_%H:%M_%Y_%m_%d.log'),level=logging.INFO,format='%(asctime)s:%(levelname)s:%(message)s')
 
 
 #appName("IBM Assignment")
