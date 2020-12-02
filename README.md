@@ -13,7 +13,7 @@
 
 ![image](https://user-images.githubusercontent.com/34623941/100903653-299ccc00-34ec-11eb-8be9-041ebdf05b74.png)
 
-### Male and female salary gap in each department
+### Male and Female salary gap in each department
 
 ![image](https://user-images.githubusercontent.com/34623941/100903496-fbb78780-34eb-11eb-87ed-41dfd69b8af6.png)
 
