@@ -7,7 +7,7 @@
 5. Implemented logging capability to write logs for each session.
 6. Implemented generic methods to read data from different file formats and DB's
 
-## Eg output snips:
+## Sample output snips:
 
 ### Average salary/Department
 
