@@ -6,11 +6,12 @@
 4. Created <a href="https://github.com/jthiruveedula/ibmSparkChallenge/blob/main/main.py">main.py</a> for instantiating spark session in standalone mode.
 5. Implemented logging capability to write logs for each session.
 6. Implemented generic methods to read data from different file formats and DB's
+7. Downloaded JDBC drivers for mysql and used jars for spark-mysql connection.
 
 Note: We need to pass our IBM accessId and secretKey while configuring that would help spark to connect IBM COS.
 
 
-# Spark-Submit
+# Spark-Submit in Standalone
 
 ```
 spark-submit --jars \
