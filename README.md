@@ -1,9 +1,9 @@
 # IBM-SparkAssignment
 
 1. Configured Hadoop and Spark services in VM(I've used GCP compute Engine)
-2. I've created envsetup.sh script that would install all dependencies and start spark services
-3. Created functSpark.py that has main class and methods for reading, writing data into COS and DB(using spark jdbc driver.) 
-4. Created main.py for instantiating spark session in standalone mode.
+2. I've created <a href="https://github.com/jthiruveedula/ibmSparkChallenge/blob/main/envsetup.sh">envsetup.sh</a> script that would install all dependencies and start spark services
+3. Created <a href="https://github.com/jthiruveedula/ibmSparkChallenge/blob/main/functSpark.py">functSpark.py</a> that has main class and methods for reading, writing data into COS and DB(using spark jdbc driver.) 
+4. Created <a href="https://github.com/jthiruveedula/ibmSparkChallenge/blob/main/main.py">main.py</a> for instantiating spark session in standalone mode.
 5. Implemented logging capability to write logs for each session.
 6. Implemented generic methods to read data from different file formats and DB's
 
