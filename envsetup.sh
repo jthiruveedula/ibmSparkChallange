@@ -15,8 +15,8 @@ echo "Configuring /opt/spark/conf/core-site.xml for connecting to IBM COS"
 
 echo "(access_key_id,secret_access_key)IBM Programmatic access for accessing IBM resources"
 
-ACCESS_KEY_ID='0aba66146f3b450cacebaa908046d17e'
-SECRET_ACCESS_KEY='27b804de3b329a680dbf148fd76da208f33e8a5aaaea4cbd'
+ACCESS_KEY_ID='<yourIBMaccessKey>'
+SECRET_ACCESS_KEY='<yourIBMSecretKey>'
 
 echo "Installing java,git,maven"
 
