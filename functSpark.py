@@ -38,7 +38,7 @@ class ibmAssignment:
         '''
         self.filetype = filetype
 
-        if lower(filetype) != "jdbc":
+        if filetype.lower() != "jdbc":
             self.sourceDF = spark.read \
                 .format(self.filetype) \
                 .option("header", "true") \
