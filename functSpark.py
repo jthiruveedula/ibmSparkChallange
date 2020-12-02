@@ -94,11 +94,13 @@ class ibmAssignment:
         '''
         this method would allow us to read data from database and display frist 20 lines
         '''
+        dbName_TableNm = "sparktest.{}".format(tableName)
+                
         sourceTableDF = self.spark.read \
             .format("jdbc") \
             .option("url", "jdbc:mysql://localhost/sparktest") \
             .option("driver", "com.mysql.jdbc.Driver") \
-            .option("dbtable", "sparktest.{}".format(tableName)) \
+            .option("dbtable",dbName_TableNm) \
             .option("user", "root") \
             .option("useSSL","false") \
             .option("password", "redhat@123") \
@@ -124,10 +126,15 @@ class ibmAssignment:
             from {} where department <> 'NULL' \
             group by department \
             """.format(tempTableName)
+
+        logging.info(query1)
  
         genderRatioPerDept = self.spark.sql(query1)
         
-        genderRatioPerDept.show()
+        query1out = genderRatioPerDept.show()
+
+        logging.info(query1out)
+
         logging.info("genderRatioPerDept has been calculated")
 
         query2 = """\
@@ -137,9 +144,13 @@ class ibmAssignment:
             group by department \
             """.format(tempTableName)
 
+        logging.info(query2)
+
         avgSalaryPerDept = self.spark.sql(query2)
 
-        avgSalaryPerDept.show()
+        query2out = avgSalaryPerDept.show()
+        
+        logging.info(query2out)
 
         logging.info("avgSalaryPerDept has been calculated")
 
@@ -152,10 +163,15 @@ class ibmAssignment:
             group by department \
             order by department \
             """.format(tempTableName)
+        
+        logging.info(query3)
 
         self.maleVsFemaleSalaryGap = self.spark.sql(query3)
         
-        maleVsFemaleSalaryGap.show()
+        query3out = self.maleVsFemaleSalaryGap.show()
+
+        logging.info(query3out)
+
         logging.info("maleVsFemaleSalaryGap has been calculated")
 
         return self.maleVsFemaleSalaryGap
@@ -167,8 +183,10 @@ class ibmAssignment:
         '''
         This method would write aggregated output to COS bucket in IBM cloud
         '''
+        bucketLocation = "cos://candidate-exercise.myCos/{}".format(bucketName)
+
         self.maleVsFemaleSalaryGap.write \
             .format(fileFormat) \
             .option("compression","snappy") \
             .mode("overwrite") \
-            .save("cos://candidate-exercise.myCos/{}".format(bucketName))
+            .save(bucketLocation)
