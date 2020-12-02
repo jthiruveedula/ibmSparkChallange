@@ -26,12 +26,7 @@ class ibmAssignment:
         
         logging.info("Spark Session created")
 
-        """ sourceDF = spark.read \
-            .format("csv") \
-            .option("header", "true") \
-            .option("inferSchema", "true") \
-            .load("cos://candidate-exercise.myCos/emp-data.csv") """
-
+        
     def sourceDataIngestion(self,filetype,location):
         '''
         This method would created data frame out of source data!
@@ -95,7 +90,7 @@ class ibmAssignment:
         this method would allow us to read data from database and display frist 20 lines
         '''
         dbName_TableNm = "sparktest.{}".format(tableName)
-                
+
         sourceTableDF = self.spark.read \
             .format("jdbc") \
             .option("url", "jdbc:mysql://localhost/sparktest") \
@@ -188,5 +183,25 @@ class ibmAssignment:
         self.maleVsFemaleSalaryGap.write \
             .format(fileFormat) \
             .option("compression","snappy") \
+            .option("header","true") \
             .mode("overwrite") \
             .save(bucketLocation)
+
+        logging.info("Data written successfully in bucket {}".format(bucketName))
+
+    def cosBucketVerifier(self,bucketName,fileFormat):
+        '''
+        this method would verify data from IBM COS
+        '''
+        bucketLocation = "cos://candidate-exercise.myCos/{}".format(bucketName)
+
+        self.cosBucketDF = self.spark.read \
+                .format(fileFormat) \
+                .option("header", "true") \
+                .load(bucketLocation)
+        bucketOut = self.cosBucketDF.show()
+
+        logging.info(bucketOut)
+
+        logging.info("Data retrived from Bucket {}".format(bucketName))
+        

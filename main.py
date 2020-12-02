@@ -54,4 +54,6 @@ Calculation completed.
 
 inst.cosBucketWriter(bucketName="candidate-exercise",fileFormat="parquet")
 
+inst.cosBucketVerifier(bucketName="candidate-exercise",fileFormat="parquet")
+
 logging.info("Spark Session Ended")
